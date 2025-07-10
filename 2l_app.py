@@ -17,7 +17,11 @@ st.title("📑 2l Filing Extractor (PDF-Only & Debug Friendly)")
 
 def fetch_pdf_text(url):
     try:
-        response = requests.get(url, timeout=10)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+            "Referer": "https://www.bseindia.com/",
+        }
+        response = requests.get(url, headers=headers, timeout=10)
         with open("temp.pdf", "wb") as f:
             f.write(response.content)
         doc = fitz.open("temp.pdf")
@@ -28,6 +32,7 @@ def fetch_pdf_text(url):
         return text
     except Exception as e:
         return f"Error: {e}"
+
 
 # ---------------- GPT 2l Formatter ----------------
 
